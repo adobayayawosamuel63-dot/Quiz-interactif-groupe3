@@ -4,19 +4,12 @@ const choix2 = document.getElementById('btnB')
 const choix3 = document.getElementById('btnC')
 const question = document.getElementById('QuestionAffiche')
 const score = document.getElementById('Affichescore')
-
-
-function afficheQuestionEtreponses(variable,i){
-   
-question.innerHTML = variable[i].question;
-choix1.innerText = variable[i].answers[0]
-choix2.innerText = variable[i].answers[1]
-choix3.innerText = variable[i].answers[2]
-}
+let Score = 0;
+let currentIndex = 0;
 
 const questions = [
 
-    {
+    { 
         question: "Que veut dire BMW ?",
         answers: ["Berlin Motoren Wagen", "Bayerische Motoren Werke", "Blau Mit Weiss"],
         correct: 2
@@ -70,3 +63,42 @@ const questions = [
 
 ]
 
+
+function afficheQuestionEtreponses(variable,i){
+question.innerHTML = variable[i].question;
+score.innerText = `score = ${Score}`
+choix1.innerText = variable[i].answers[0]
+choix2.innerText = variable[i].answers[1]
+choix3.innerText = variable[i].answers[2]
+let correct = questions[currentIndex].correct
+
+
+}
+
+
+function answers(choix,questions,Score,currentIndex){
+    console.log(choix , questions[currentIndex].correct);
+    
+    if(choix == questions[currentIndex].correct){
+        
+        Score++; 
+        currentIndex++;
+        score.innerText = `score = ${Score}`
+
+    }else{
+        currentIndex++;
+       score.innerText = `score = ${Score}`
+        
+    }
+    
+    if(currentIndex == variable.length){
+question.innerHTML = 'fin du quiz';
+score.innerText = `score final = ${Score}`
+    }
+}
+
+afficheQuestionEtreponses(questions,currentIndex);
+
+choix1.addEventListener('click',()=>answers(questions[currentIndex].answers[0],questions))
+choix2.addEventListener('click',()=>answers(questions[currentIndex].answers[1],questions))
+choix3.addEventListener('click',()=>answers(questions[currentIndex].answers[2],questions))
